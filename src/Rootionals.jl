@@ -10,8 +10,12 @@ type Rootional
     den_exp::Vector{Rational}
 end
 Rootional(num, num_exp) = Rootional(num, num_exp, [1], [1])
-one(::Type{Rootional}) = Rootional([1], [1])
-zero(::Type{Rootional}) = Rootional([0], [1])
+
+Rootional(z::Int) = Rootional([z], [1])
+Rootional(q::Rational) = Rootional([num(q)], [1], [den(q)], [1])
+
+one(::Type{Rootional}) = Rootional(1)
+zero(::Type{Rootional}) = Rootional(0)
 
 ==(a::Rootional, b::Rootional) =
     (a.num == b.num) && (a.num_exp == b.num_exp) &&
