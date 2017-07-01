@@ -4,7 +4,7 @@
 #+PROPERTY: header-args:julia :session *rootionals:jl*
 
 [[https://travis-ci.org/jagot/Rootionals.jl][https://travis-ci.org/jagot/Rootionals.jl.svg?branch=master]]
-[[https://coveralls.io/github/jagot/Rootionals.jl?branch=master][https://coveralls.io/repos/jagot/Rootionals.jl/badge.svg?branch=master&service=github]]
+[[https://coveralls.io/github/jagot/Rootionals.jl?branch=master][https://coveralls.io/repos/github/jagot/Rootionals.jl/badge.svg?branch=master]]
 [[http://codecov.io/github/jagot/Rootionals.jl?branch=master][http://codecov.io/github/jagot/Rootionals.jl/coverage.svg?branch=master]]
 
 A light-weight implementation of fractional roots (numbers such as
