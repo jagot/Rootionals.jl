@@ -4,22 +4,17 @@ using UnicodeFun
 import Base: num, den, one, zero, show, ==
 
 type Rootional
-    num::Vector{Int}
-    num_exp::Vector{Rational}
-    den::Vector{Int}
-    den_exp::Vector{Rational}
+    b::Vector{Int}
+    e::Vector{Rational}
 end
-Rootional(num, num_exp) = Rootional(num, num_exp, [1], [1])
 
 Rootional(z::Int) = Rootional([z], [1])
-Rootional(q::Rational) = Rootional([num(q)], [1], [den(q)], [1])
+Rootional(q::Rational) = Rootional([num(q), den(q)], [1, -1])
 
 one(::Type{Rootional}) = Rootional(1)
 zero(::Type{Rootional}) = Rootional(0)
 
-==(a::Rootional, b::Rootional) =
-    (a.num == b.num) && (a.num_exp == b.num_exp) &&
-    (a.den == b.den) && (a.den_exp == b.den_exp)
+==(a::Rootional, b::Rootional) = (a.b == b.b) && (a.e == b.e)
 
 function format_factor(n,e)
     en = num(e)
@@ -34,7 +29,7 @@ function format_factor(n,e)
         elseif ed == 4
             "∜"
         else
-            "√$(to_superscript(ed))"
+            "$(to_superscript(ed))√"
         end
         "$(root)$(n)"
     end
@@ -51,19 +46,40 @@ function format_factor(n,e)
 end
 
 function show(stream::IO, r::Rootional)
-    for i in eachindex(r.num)
-        write(stream, format_factor(r.num[i],r.num_exp[i]))
+    ni = find(r.e .> 0)
+    di = find(r.e .< 0)
+    if length(ni) > 0
+        for i in ni
+            write(stream, format_factor(r.b[i],r.e[i]))
+        end
+    else
+        write(stream, "1")
     end
-    if r.den != [1]
+    if length(di) > 0
         write(stream, "/")
-        for i in eachindex(r.den)
-            write(stream, format_factor(r.den[i],r.den_exp[i]))
+        for i in di
+            write(stream, format_factor(r.b[i],-r.e[i]))
         end
     end
 end
 
-num(r::Rootional) = Rootional(r.num, r.num_exp, [1], [1])
-den(r::Rootional) = Rootional(r.den, r.den_exp, [1], [1])
+function num(r::Rootional)
+    ni = find(r.e .> 0)
+    if length(ni) > 0
+        Rootional(r.b[ni], r.e[ni])
+    else
+        one(Rootional)
+    end
+end
+
+function den(r::Rootional)
+    di = find(r.e .< 0)
+    if length(di) > 0
+        Rootional(r.b[di], -r.e[di])
+    else
+        one(Rootional)
+    end
+end
 
 
 export Rootional

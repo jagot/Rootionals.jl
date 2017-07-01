@@ -12,10 +12,8 @@ A light-weight implementation of fractional roots (numbers such as
 dependencies of this package are however much larger.
 
 * Usage example
-  A /rootional/ is defined by four vectors, two (bases as integers and
-  exponents as rationals) for the numerator and denominator. If the
-  denominator is unity, we only need to specify the numerator in the
-  constructor.
+  A /rootional/ is defined by two vectors, the first containing the
+  bases as integers, and the second the exponents as rationals.
 
   We first load the package:
   #+BEGIN_SRC julia :exports code
@@ -36,7 +34,7 @@ dependencies of this package are however much larger.
 
   If we instead want to represent its inverse, we write:
   #+BEGIN_SRC julia :exports both
-    Rootional([1], [1], [2], [1//2])
+    Rootional([2], [-1//2])
   #+END_SRC
 
   #+RESULTS:
@@ -44,8 +42,8 @@ dependencies of this package are however much larger.
 
   More complicated rootionals can of course be formed:
   #+BEGIN_SRC julia :exports both
-    Rootional([3], [3//4], [2,6], [1,1//3])
+    Rootional([3, 2, 6], [3//4, -2, -1//3])
   #+END_SRC
 
   #+RESULTS:
-  : (∜3)³/2∛6
+  : (∜3)³/2²∛6
