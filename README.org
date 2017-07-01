@@ -1,0 +1,51 @@
+#+TITLE: Rootionals.jl
+#+AUTHOR: Stefanos Carlström
+#+EMAIL: stefanos.carlstrom@gmail.com
+#+PROPERTY: header-args:julia :session *rootionals:jl*
+
+[[https://travis-ci.org/jagot/Rootionals.jl][https://travis-ci.org/jagot/Rootionals.jl.svg?branch=master]]
+[[https://coveralls.io/github/jagot/Rootionals.jl?branch=master][https://coveralls.io/repos/jagot/Rootionals.jl/badge.svg?branch=master&service=github]]
+[[http://codecov.io/github/jagot/Rootionals.jl?branch=master][http://codecov.io/github/jagot/Rootionals.jl/coverage.svg?branch=master]]
+
+A light-weight implementation of fractional roots (numbers such as
+1/√2). For a more comprehensive package, see [[https://github.com/anj1/AlgebraicNumbers.jl][AlgebraicNumbers.jl]]; the
+dependencies of this package are however much larger.
+
+* Usage example
+  A /rootional/ is defined by four vectors, two (bases as integers and
+  exponents as rationals) for the numerator and denominator. If the
+  denominator is unity, we only need to specify the numerator in the
+  constructor.
+
+  We first load the package:
+  #+BEGIN_SRC julia :exports code
+    using Rootionals
+  #+END_SRC
+
+  #+RESULTS:
+  : nothing
+
+  The square root of two is defined by specifying the base (2) and the
+  exponent (1//2), as the arguments to the constructor:
+  #+BEGIN_SRC julia :exports both
+    Rootional([2], [1//2])
+  #+END_SRC
+
+  #+RESULTS:
+  : √2
+
+  If we instead want to represent its inverse, we write:
+  #+BEGIN_SRC julia :exports both
+    Rootional([1], [1], [2], [1//2])
+  #+END_SRC
+
+  #+RESULTS:
+  : 1/√2
+
+  More complicated rootionals can of course be formed:
+  #+BEGIN_SRC julia :exports both
+    Rootional([3], [3//4], [2,6], [1,1//3])
+  #+END_SRC
+
+  #+RESULTS:
+  : (∜3)³/2∛6
