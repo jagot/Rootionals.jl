@@ -3,7 +3,8 @@ using UnicodeFun
 using Primes
 
 import Base: num, den, one, zero, show, ==,
-    *, /, ^, sqrt, cbrt
+    *, /, ^, sqrt, cbrt,
+    float
 
 type Rootional
     b::Vector{Int}
@@ -98,6 +99,14 @@ function den(r::Rootional)
     else
         one(Rootional)
     end
+end
+
+function float(r::Rootional)
+    f = 1.0
+    for i in eachindex(r.b)
+        f *= float(r.b[i])^r.e[i]
+    end
+    f
 end
 
 "Simplify a rootional by cancelling and merging common bases."

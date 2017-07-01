@@ -31,6 +31,10 @@ end
     @test 5 == R(5)
     @test R(3//5) == 3//5
     @test 7//7 == one(R)
+
+    @test float(R(2)) == 2.0
+    @test float(R([2], [1//2])) ≈ sqrt(2)
+    @test float(R([2], [-1//2])) ≈ 1/sqrt(2)
 end
 
 @testset "Arithmetic" begin
