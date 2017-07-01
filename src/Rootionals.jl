@@ -1,7 +1,7 @@
 module Rootionals
 using UnicodeFun
 
-import Base: num, den, one, show, ==
+import Base: num, den, one, zero, show, ==
 
 type Rootional
     num::Vector{Int}
@@ -11,6 +11,7 @@ type Rootional
 end
 Rootional(num, num_exp) = Rootional(num, num_exp, [1], [1])
 one(::Type{Rootional}) = Rootional([1], [1])
+zero(::Type{Rootional}) = Rootional([0], [1])
 
 ==(a::Rootional, b::Rootional) =
     (a.num == b.num) && (a.num_exp == b.num_exp) &&
