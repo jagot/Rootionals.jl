@@ -11,6 +11,12 @@ R = Rootional
 @test one(R) == R(1)
 @test zero(R) == R(0)
 
+@test one(R) == 1
+@test 5 == R(5)
+@test R(3//5) == 3//5
+@test simplify!(R([3,3], [4, -1//2])) == R([3], [7//2])
+@test 7//7 == one(R)
+
 @test string(R([2], [1//2])) == "√2"
 @test string(R([2], [-1//2])) == "1/√2"
 @test string(R([3, 2, 6], [3//4, -2, -1//3])) == "(∜3)³/2²∛6"
