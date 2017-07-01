@@ -1,14 +1,16 @@
 module Rootionals
 using UnicodeFun
+using Primes
 
-import Base: num, den, one, zero, show, ==
+import Base: num, den, one, zero, show, ==,
+    *, /, ^, sqrt, cbrt
 
 type Rootional
     b::Vector{Int}
     e::Vector{Rational}
 end
 
-Rootional(z::Int) = Rootional([z], [1])
+Rootional(z::Int) = simplify!(Rootional([z], [1]))
 Rootional(q::Rational) = simplify!(Rootional([num(q), den(q)], [1, -1]))
 
 one(::Type{Rootional}) = Rootional(1)
@@ -17,6 +19,21 @@ zero(::Type{Rootional}) = Rootional(0)
 ==(a::Rootional, b::Rootional) = (a.b == b.b) && (a.e == b.e)
 ==(a::Rootional, b::Union{Int,Rational}) = a == Rootional(b)
 ==(a::Union{Int,Rational}, b::Rootional) = Rootional(a) == b
+
+*(a::Rootional, b::Rootional) =
+    simplify!(Rootional(vcat(a.b,b.b), vcat(a.e, b.e)))
+*(a::Rootional, b::Union{Int,Rational}) = a*Rootional(b)
+*(a::Union{Int,Rational}, b::Rootional) = Rootional(a)*b
+
+/(a::Rootional, b::Rootional) =
+    simplify!(Rootional(vcat(a.b,b.b), vcat(a.e, -b.e)))
+/(a::Rootional, b::Union{Int,Rational}) = a/Rootional(b)
+/(a::Union{Int,Rational}, b::Rootional) = Rootional(a)/b
+
+^(a::Rootional, e::Union{Int,Rational}) = simplify!(Rootional(a.b, e*a.e))
+
+sqrt(a::Rootional) = a^(1//2)
+cbrt(a::Rootional) = a^(1//3)
 
 function format_factor(n,e)
     en = num(e)
@@ -87,9 +104,14 @@ end
 function simplify!(r::Rootional)
     d = Dict{Int,Rational}()
     for i in eachindex(r.b)
-        d[r.b[i]] = get(d, r.b[i], 0) + r.e[i]
+        for (f,e) in factor(r.b[i])
+            d[f] = get(d, f, 0) + e*r.e[i]
+        end
     end
     delete!(d, 1)
+    for b in keys(d)
+        d[b] == 0 && delete!(d, b)
+    end
     length(d) == 0 && (d[1]=1)
     r.b = sort(collect(keys(d)))
     r.e = [d[b] for b in r.b]

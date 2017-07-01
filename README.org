@@ -18,15 +18,24 @@ dependencies of this package are however much larger.
   We first load the package:
   #+BEGIN_SRC julia :exports code
     using Rootionals
+    R = Rootional
   #+END_SRC
 
   #+RESULTS:
-  : nothing
+  : Rootionals.Rootional
 
   The square root of two is defined by specifying the base (2) and the
   exponent (1//2), as the arguments to the constructor:
   #+BEGIN_SRC julia :exports both
-    Rootional([2], [1//2])
+    R([2], [1//2])
+  #+END_SRC
+
+  #+RESULTS:
+  : √2
+
+  An equivalent way is
+  #+BEGIN_SRC julia :exports both
+    sqrt(R(2))
   #+END_SRC
 
   #+RESULTS:
@@ -34,15 +43,23 @@ dependencies of this package are however much larger.
 
   If we instead want to represent its inverse, we write:
   #+BEGIN_SRC julia :exports both
-    Rootional([2], [-1//2])
+    R([2], [-1//2])
+  #+END_SRC
+
+  #+RESULTS:
+  : 1/√2
+  or more naturally
+  #+BEGIN_SRC julia
+    1/sqrt(R(2))
   #+END_SRC
 
   #+RESULTS:
   : 1/√2
 
+
   More complicated rootionals can of course be formed:
   #+BEGIN_SRC julia :exports both
-    Rootional([3, 2, 6], [3//4, -2, -1//3])
+    R([3, 2, 6], [3//4, -2, -1//3])
   #+END_SRC
 
   #+RESULTS:
