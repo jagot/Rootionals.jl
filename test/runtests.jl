@@ -1,5 +1,5 @@
 using Rootionals
-using Base.Test
+using Test
 
 R = Rootional
 
@@ -14,10 +14,10 @@ R = Rootional
 end
 
 @testset "Access" begin
-    @test num(R([2], [1//2])) == R([2], [1//2])
-    @test num(R([2], [-1//2])) == one(R)
-    @test den(R([2], [1//2])) == one(R)
-    @test den(R([2], [-1//2])) == R([2], [1//2])
+    @test numerator(R([2], [1//2])) == R([2], [1//2])
+    @test numerator(R([2], [-1//2])) == one(R)
+    @test denominator(R([2], [1//2])) == one(R)
+    @test denominator(R([2], [-1//2])) == R([2], [1//2])
 end
 
 @testset "Simplify" begin

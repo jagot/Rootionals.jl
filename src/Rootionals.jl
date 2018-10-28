@@ -2,17 +2,17 @@ module Rootionals
 using UnicodeFun
 using Primes
 
-import Base: num, den, one, zero, show, ==,
+import Base: numerator, denominator, one, zero, show, ==,
     *, /, ^, sqrt, cbrt,
     float
 
-type Rootional
+mutable struct Rootional
     b::Vector{Int}
     e::Vector{Rational}
 end
 
 Rootional(z::Int) = simplify!(Rootional([z], [1]))
-Rootional(q::Rational) = simplify!(Rootional([num(q), den(q)], [1, -1]))
+Rootional(q::Rational) = simplify!(Rootional([numerator(q), denominator(q)], [1, -1]))
 
 one(::Type{Rootional}) = Rootional(1)
 zero(::Type{Rootional}) = Rootional(0)
@@ -37,8 +37,8 @@ sqrt(a::Rootional) = a^(1//2)
 cbrt(a::Rootional) = a^(1//3)
 
 function format_factor(n,e)
-    en = num(e)
-    ed = den(e)
+    en = numerator(e)
+    ed = denominator(e)
     core = if ed == 1
         "$(n)"
     else
@@ -66,8 +66,8 @@ function format_factor(n,e)
 end
 
 function show(stream::IO, r::Rootional)
-    ni = find(r.e .> 0)
-    di = find(r.e .< 0)
+    ni = findall(r.e .> 0)
+    di = findall(r.e .< 0)
     if length(ni) > 0
         for i in ni
             write(stream, format_factor(r.b[i],r.e[i]))
@@ -83,8 +83,8 @@ function show(stream::IO, r::Rootional)
     end
 end
 
-function num(r::Rootional)
-    ni = find(r.e .> 0)
+function numerator(r::Rootional)
+    ni = findall(r.e .> 0)
     if length(ni) > 0
         Rootional(r.b[ni], r.e[ni])
     else
@@ -92,8 +92,8 @@ function num(r::Rootional)
     end
 end
 
-function den(r::Rootional)
-    di = find(r.e .< 0)
+function denominator(r::Rootional)
+    di = findall(r.e .< 0)
     if length(di) > 0
         Rootional(r.b[di], -r.e[di])
     else
