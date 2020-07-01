@@ -3,6 +3,8 @@
 #+EMAIL: stefanos.carlstrom@gmail.com
 #+PROPERTY: header-args:julia :session *rootionals:jl*
 
+*THIS PACKAGE IS DEPRECATED* in favour of the much better package [[https://github.com/Jutho/RationalRoots.jl][RationalRoots.jl]].
+
 [[https://travis-ci.org/jagot/Rootionals.jl][https://travis-ci.org/jagot/Rootionals.jl.svg?branch=master]]
 [[https://coveralls.io/github/jagot/Rootionals.jl?branch=master][https://coveralls.io/repos/github/jagot/Rootionals.jl/badge.svg?branch=master]]
 [[http://codecov.io/github/jagot/Rootionals.jl?branch=master][http://codecov.io/github/jagot/Rootionals.jl/coverage.svg?branch=master]]
